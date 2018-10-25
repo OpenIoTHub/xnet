@@ -203,9 +203,9 @@ func decode(s string) string {
 	s = string(decodeBytes)
 
 	if gbk {
-		s2, err := xcharset.ConvCharset(s, "gbk", "utf-8")
+		s2, err := xcharset.GbkToUtf8([]byte(s))
 		if err == nil {
-			s = s2
+			s = string(s2)
 		}
 	}
 

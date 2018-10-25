@@ -1,10 +1,9 @@
 package xmail
 
 import (
+	"encoding/json"
 	"github.com/MrMcDuck/xdsa/xstring"
 	"github.com/MrMcDuck/xnet/xaddr"
-	"encoding/json"
-	"fmt"
 	"github.com/pkg/errors"
 	"strings"
 )
@@ -53,7 +52,6 @@ func (p *Provider) GetReceiveServer() (address string, port int, ssl bool, err e
 		if err != nil {
 			return "", 0, false, errors.Errorf("GetRecvServer error for %s", p.String())
 		}
-		fmt.Println(us.String())
 		return us.Host.Domain, us.Host.Port, p.SMTPIsSSL, nil
 	} else {
 		return "", 0, false, errors.Errorf("GetRecvServer error for %s", p.String())
@@ -67,11 +65,13 @@ func (p *Provider) GetSendServer() (address string, port int, ssl bool, err erro
 		if err != nil {
 			return "", 0, false, errors.Errorf("GetSendServer error for %s", p.String())
 		}
-		fmt.Println(us.String())
 		return us.Host.Domain, us.Host.Port, p.SMTPIsSSL, nil
 	} else if len(p.IMAPAddress) > 0 {
 		us, err := xaddr.ParseUrlOnline(p.IMAPAddress, "")
 		if err != nil {
+			return "", 0, false, errors.Errorf("GetSendServer error for %s", p.String())
+		}
+		if len(us.Host.Domain) == 0 || us.Host.Port <= 0 {
 			return "", 0, false, errors.Errorf("GetSendServer error for %s", p.String())
 		}
 		return us.Host.Domain, us.Host.Port, p.IMAPIsSSL, nil

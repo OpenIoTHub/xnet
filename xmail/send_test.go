@@ -2,30 +2,25 @@ package xmail
 
 import (
 	"testing"
-	"fmt"
 )
 
 func TestSend(t *testing.T) {
-	f := (*Filter)(nil)
-	fmt.Println(f.Useful())
-
-
 	evn := Envelope{}
-	evn.From.Email = "myusername@yahoo.com"
+	evn.From.Email = "user@yahoo.com"
 	evn.From.Showname = "testname"
-	to := AddrEdit{Email:"myusername@gmail.com", Showname:"myshowname"}
+	to := AddrEdit{Email:"user@qq.com", Showname:"myshowname"}
 	evn.To = append(evn.To, to)
-	evn.Subject = "test email title 2"
+	evn.Subject = "test email title"
 	body, err := MakeBody()
 	if err != nil {
 		t.Error(err)
 	}
 
-	c := SendContent{}
-	c.BodyString = body
-	c.BodyType = BodyTypeHTML
+	content := SendContent{}
+	content.BodyString = body
+	content.BodyType = BodyTypeHTML
 
-	if err := Send(evn, c, "asdfVCXZ*", nil); err != nil {
+	if err := Send(evn, content, "mypwd", nil); err != nil {
 		t.Error(err)
 	}
 }

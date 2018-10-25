@@ -11,13 +11,13 @@ import (
 	"time"
 	"crypto/tls"
 	"github.com/MrMcDuck/xdsa/xstring"
-	"github.com/MrMcDuck/xnet/xaddr/xurl"
+	"github.com/MrMcDuck/xnet/xaddr"
 )
 
 // FIXME 不要新建Transport，而是基于原来的修改
 // This proxy config method is different from xhttp/client.go Get()
 func SetProxy(client *http.Client, proxyUrlString string) error {
-	us, err := xurl.Parse(proxyUrlString, "")
+	us, err := xaddr.ParseUrlOnline(proxyUrlString, "")
 	if err != nil {
 		return err
 	}

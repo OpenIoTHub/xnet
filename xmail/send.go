@@ -1,6 +1,8 @@
 package xmail
 
 import (
+	"fmt"
+	"github.com/MrMcDuck/xsys/xclock"
 	"github.com/go-gomail/gomail"
 	"github.com/pkg/errors"
 )
@@ -63,6 +65,23 @@ func Send(e Envelope, c SendContent, password string, p *Provider) error {
 		d.SSL = true
 	}
 	if err := d.DialAndSend(msg); err != nil {
+		return err
+	}
+	return nil
+}
+
+// send to itself to test it
+func TestAccount(addr, pwd string) error {
+	evn := Envelope{}
+	evn.From.Email = addr
+	evn.From.Showname = "email test"
+	to := AddrEdit{Email: addr, Showname: ""}
+	evn.To = append(evn.To, to)
+	evn.Subject = fmt.Sprintf("email test - %s", xclock.TodayString())
+	content := SendContent{}
+	content.BodyString = "email test"
+	content.BodyType = BodyTypePlainText
+	if err := Send(evn, content, pwd, nil); err != nil {
 		return err
 	}
 	return nil
