@@ -2,8 +2,8 @@ package xmail
 
 import (
 	"encoding/json"
-	"github.com/MrMcDuck/xdsa/xstring"
-	"github.com/MrMcDuck/xnet/xaddr"
+	"github.com/smcduck/xdsa/xstring"
+	"github.com/smcduck/xnet/xaddr"
 	"github.com/pkg/errors"
 	"strings"
 )

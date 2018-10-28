@@ -3,8 +3,8 @@ package request
 // Detect as much information as possible from http client request
 
 import (
-	"github.com/MrMcDuck/xnet/xaddr"
-	"github.com/MrMcDuck/xnet/xhttp"
+	"github.com/smcduck/xnet/xaddr"
+	"github.com/smcduck/xnet/xhttp"
 	"github.com/valyala/fasthttp"
 	"strings"
 )

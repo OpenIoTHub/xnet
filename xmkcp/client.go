@@ -10,7 +10,7 @@ import (
 	v2net "v2ray.com/core/common/net"
 	"v2ray.com/core/transport/internet"
 	. "v2ray.com/core/transport/internet/kcp"
-	"github.com/MrMcDuck/xnet/xaddr"
+	"github.com/smcduck/xnet/xaddr"
 )
 
 // mkcp client

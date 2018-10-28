@@ -2,8 +2,8 @@ package xonline
 
 import (
 	"time"
-	"github.com/MrMcDuck/xnet/xhttp/client"
-	"github.com/MrMcDuck/xdsa/xstring"
+	"github.com/smcduck/xnet/xhttp/client"
+	"github.com/smcduck/xdsa/xstring"
 )
 
 // don't use LookupHost (DNS) method to detect WAN status,

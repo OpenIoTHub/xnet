@@ -1,7 +1,7 @@
 package speedtest
 
 import (
-	"github.com/MrMcDuck/xdsa/xnum"
+	"github.com/smcduck/xdsa/xnum"
 	"encoding/xml"
 	"fmt"
 	"github.com/pkg/errors"
@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"sort"
 	"strconv"
-	"github.com/MrMcDuck/xdsa/geo"
-	"github.com/MrMcDuck/xapputil/xlog"
+	"github.com/smcduck/xdsa/geo"
+	"github.com/smcduck/xapputil/xlog"
 )
 
 // TestServer information

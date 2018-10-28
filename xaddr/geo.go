@@ -5,8 +5,8 @@ import (
 	"net"
 	"os"
 	"time"
-	"github.com/MrMcDuck/xnet/xhttp/client"
-	"github.com/MrMcDuck/xsys/xfs"
+	"github.com/smcduck/xnet/xhttp/client"
+	"github.com/smcduck/xsys/xfs"
 )
 
 // https://github.com/getlantern/geolookup 在线查询的，但是服务提供方需要翻墙

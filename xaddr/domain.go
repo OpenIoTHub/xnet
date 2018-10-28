@@ -11,8 +11,8 @@ import (
 	"github.com/weppos/publicsuffix-go/publicsuffix"
 	"os"
 	"time"
-	"github.com/MrMcDuck/xsys/xenvvar"
-	"github.com/MrMcDuck/xsys/xfs"
+	"github.com/smcduck/xsys/xenvvar"
+	"github.com/smcduck/xsys/xfs"
 	"github.com/liamcurry/domains"
 	"github.com/domainr/whois"
 )

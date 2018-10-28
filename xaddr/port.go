@@ -5,7 +5,7 @@ import (
 	"net"
 	"strconv"
 	"strings"
-	"github.com/MrMcDuck/xdsa/xrandom"
+	"github.com/smcduck/xdsa/xrandom"
 )
 
 func IsValidPort(port int) bool {

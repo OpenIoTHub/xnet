@@ -10,8 +10,8 @@ import (
 	"net/url"
 	"time"
 	"crypto/tls"
-	"github.com/MrMcDuck/xdsa/xstring"
-	"github.com/MrMcDuck/xnet/xaddr"
+	"github.com/smcduck/xdsa/xstring"
+	"github.com/smcduck/xnet/xaddr"
 )
 
 // FIXME 不要新建Transport，而是基于原来的修改

@@ -1,8 +1,8 @@
 package speedtest
 
 import (
-	"github.com/MrMcDuck/xdsa/xnum"
-	"github.com/MrMcDuck/xapputil/xlog"
+	"github.com/smcduck/xdsa/xnum"
+	"github.com/smcduck/xapputil/xlog"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"

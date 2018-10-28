@@ -5,7 +5,7 @@ import (
 	"github.com/mssola/user_agent" // 实测准确性较差
 	"github.com/pkg/errors"
 	"strings"
-	"github.com/MrMcDuck/xdsa/xstring"
+	"github.com/smcduck/xdsa/xstring"
 )
 
 type UserAgnetInfo struct {

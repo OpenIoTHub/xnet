@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"github.com/MrMcDuck/xapptuil/xlog"
+	"github.com/smcduck/xapptuil/xlog"
 )
 
 var (

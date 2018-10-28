@@ -1,7 +1,7 @@
 package speedtest
 
 import (
-	"github.com/MrMcDuck/xdsa/xspeed"
+	"github.com/smcduck/xdsa/xspeed"
 )
 
 func TestDownloadSpeed() (*xspeed.Speed, error) {

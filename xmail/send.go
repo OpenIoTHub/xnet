@@ -2,7 +2,7 @@ package xmail
 
 import (
 	"fmt"
-	"github.com/MrMcDuck/xsys/xclock"
+	"github.com/smcduck/xsys/xclock"
 	"github.com/go-gomail/gomail"
 	"github.com/pkg/errors"
 )

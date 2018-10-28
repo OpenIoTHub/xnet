@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"v2ray.com/core/common/net"
-	"github.com/MrMcDuck/xdsa/xstring"
-	"github.com/MrMcDuck/xarchive/xmultimedia"
+	"github.com/smcduck/xdsa/xstring"
+	"github.com/smcduck/xarchive/xmultimedia"
 )
 
 // scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]

@@ -11,7 +11,7 @@ import (
 	"strings"
 	"html/template"
 	"time"
-	"github.com/MrMcDuck/xapputil/xlog"
+	"github.com/smcduck/xapputil/xlog"
 )
 
 //concern for name collision, filename need to be unique

@@ -6,9 +6,9 @@ import (
 	"net"
 	"strings"
 	"time"
-	"github.com/MrMcDuck/xdsa/xstring"
-	"github.com/MrMcDuck/xnet/xhttp/client"
-	"github.com/MrMcDuck/xnet/xprobe/xonline"
+	"github.com/smcduck/xdsa/xstring"
+	"github.com/smcduck/xnet/xhttp/client"
+	"github.com/smcduck/xnet/xprobe/xonline"
 )
 
 // Get all my local IPs

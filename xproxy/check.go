@@ -2,9 +2,9 @@ package xproxy
 
 import (
 	// "github.com/GameXG/ProxyClient" // http client using socks5 proxy supported not well
-	"github.com/MrMcDuck/xdsa/xspeed"
-	"github.com/MrMcDuck/xnet/xaddr"
-	"github.com/MrMcDuck/xnet/xhttp"
+	"github.com/smcduck/xdsa/xspeed"
+	"github.com/smcduck/xnet/xaddr"
+	"github.com/smcduck/xnet/xhttp"
 	"github.com/pkg/errors"
 	"time"
 )

@@ -7,9 +7,9 @@ import (
 	"github.com/pkg/errors"
 	"strings"
 	"time"
-	"github.com/MrMcDuck/xdsa/xstring"
+	"github.com/smcduck/xdsa/xstring"
 	"encoding/base64"
-	"github.com/MrMcDuck/xsys/xcharset"
+	"github.com/smcduck/xsys/xcharset"
 	"io"
 	"io/ioutil"
 )

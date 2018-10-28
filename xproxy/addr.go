@@ -1,7 +1,7 @@
 package xproxy
 
 import (
-	"github.com/MrMcDuck/xnet/xaddr/xurl"
+	"github.com/smcduck/xnet/xaddr/xurl"
 	"github.com/pkg/errors"
 	"strings"
 )

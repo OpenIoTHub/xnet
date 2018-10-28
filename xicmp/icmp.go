@@ -1,11 +1,11 @@
 package xicmp
 
 import (
-	"github.com/MrMcDuck/xnet/xicmp/pinger"
+	"github.com/smcduck/xnet/xicmp/pinger"
 	"fmt"
 	"os"
 	"time"
-	"github.com/MrMcDuck/xapputil/xerror"
+	"github.com/smcduck/xapputil/xerror"
 )
 
 // UDP ping的原理？

@@ -2,7 +2,7 @@ package xmail
 
 import (
 	"github.com/badoux/checkmail"
-	"github.com/MrMcDuck/xdsa/xstring"
+	"github.com/smcduck/xdsa/xstring"
 )
 
 type Address struct {

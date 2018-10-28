@@ -10,7 +10,7 @@ import (
 	"v2ray.com/core/transport/internet"
 	mkcp "v2ray.com/core/transport/internet/kcp"
 	"fmt"
-	"github.com/MrMcDuck/xnet/xaddr"
+	"github.com/smcduck/xnet/xaddr"
 )
 
 // mkcp server

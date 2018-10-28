@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/valyala/fasthttp"
 	"github.com/valyala/fasthttp/expvarhandler"
-	"github.com/MrMcDuck/xapputil/xlog"
+	"github.com/smcduck/xapputil/xlog"
 )
 
 type FileServerOptions struct {

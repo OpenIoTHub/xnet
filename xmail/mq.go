@@ -3,7 +3,7 @@ package xmail
 import (
 	"github.com/mikaa123/imapmq"
 	"github.com/pkg/errors"
-	"github.com/MrMcDuck/xdsa/xrandom"
+	"github.com/smcduck/xdsa/xrandom"
 )
 
 // Used email account to implement a simple message queue

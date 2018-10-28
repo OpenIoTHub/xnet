@@ -3,10 +3,10 @@ package xprobe
 import (
 	"net"
 	"time"
-	"github.com/MrMcDuck/xapputil/xerror"
-	"github.com/MrMcDuck/xdsa/xstring"
-	"github.com/MrMcDuck/xnet/xaddr/xhostaddr"
-	"github.com/MrMcDuck/xnet/xaddr/xport"
+	"github.com/smcduck/xapputil/xerror"
+	"github.com/smcduck/xdsa/xstring"
+	"github.com/smcduck/xnet/xaddr/xhostaddr"
+	"github.com/smcduck/xnet/xaddr/xport"
 )
 
 func Tcping(host string, port int, timeout time.Duration) (opened bool, err error) {
