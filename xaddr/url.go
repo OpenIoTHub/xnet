@@ -6,12 +6,12 @@ package xaddr
 import (
 	"github.com/goware/urlx"
 	"github.com/pkg/errors"
+	"github.com/smcduck/xarchive/xmultimedia"
+	"github.com/smcduck/xdsa/xstring"
 	"net/url"
 	"strconv"
 	"strings"
 	"v2ray.com/core/common/net"
-	"github.com/smcduck/xdsa/xstring"
-	"github.com/smcduck/xarchive/xmultimedia"
 )
 
 // scheme:[//[user:password@]host[:port]][/]path[?query][#fragment]
@@ -57,7 +57,7 @@ const (
 type Scheme int
 
 // "http://bing.com/" is domain url, "http://bing.com/search" is not domain url
-func IsDomain(str string) bool {
+func IsAndOnlyDomain(str string) bool {
 	u, err := url.Parse(str)
 	if err != nil {
 		return false
@@ -98,6 +98,12 @@ type UrlAuth struct {
 	PasswordSet bool
 }
 
+type Path struct {
+	Str string
+	Dirs []string
+	Params map[string][]string
+}
+
 func (ua *UrlAuth) String() string {
 	res := ""
 	if len(ua.User) > 0 {
@@ -111,9 +117,10 @@ func (ua *UrlAuth) String() string {
 
 type UrlSlice struct {
 	Scheme string
+	Domain Domain
 	Auth   UrlAuth
 	Host   UrlHost
-	Path   string
+	Path   Path
 }
 
 func (uh *UrlHost) String() string {
@@ -140,66 +147,71 @@ func (us *UrlSlice) String() string {
 		res += us.Auth.String() + "@"
 	}
 	res += us.Host.String()
-	if len(us.Path) > 0 {
-		res += "/" + us.Path
+	if len(us.Path.Str) > 0 {
+		res += "/" + us.Path.Str
 	}
 	return res
 }
 
-// FIXME
-// Domain parse undone
-//
 // NOTICE
-// url.Parse("192.168.1.1:80") reports error because RFC3986 says "192.168.1.1:80" is a invalid url, the correct way is "//192.168.1.1:80".
-// In xurl, "192.168.1.1:80" is a valid url because it is used a lot
+// url.Parse("192.168.1.1:80") reports error because RFC3986 says "192.168.1.1:80" is an invalid url, the correct way is "//192.168.1.1:80".
+// In xaddr library, "192.168.1.1:80" is a valid url because it is used a lot
 // Reference: https://github.com/golang/go/issues/19297
-func ParseUrlOnline(urlStr string, defaultScheme string) (*UrlSlice, error) {
-
+func ParseUrl(urlStr string) (*UrlSlice, error) {
 	u, err := urlx.Parse(urlStr)
 	if err != nil {
 		return nil, err
 	}
 	var s UrlSlice
 
-	// 即使urlStr中没有Scheme，urlx默认认为并且返回http的scheme
-	// 所以这里要检查确认一下返回的Scheme是否正确
-	if xstring.StartWith(urlStr, strings.ToLower(u.Scheme) + "://") {
+	// if there is NO scheme in input url string, urlx.Parse will give default scheme "http://"
+	// so I must check urlx.Parse return scheme
+	if xstring.StartWith(strings.ToLower(urlStr), strings.ToLower(u.Scheme) + "://") {
 		s.Scheme = u.Scheme
-	} else {
-		s.Scheme = defaultScheme
 	}
 	if u.User != nil {
 		s.Auth.User = u.User.Username()
 		s.Auth.Password, s.Auth.PasswordSet = u.User.Password()
 	}
-	host, _, err := net.SplitHostPort(u.Host)
-	if err != nil {
-		return nil, err
+	if strings.Contains(u.Host, ":") {
+		if host, portstr, err := net.SplitHostPort(u.Host); err != nil {
+			return nil, err
+		} else {
+			if portstr != "" {
+				if port, err := strconv.Atoi(portstr); err != nil {
+					return nil, err
+				} else {
+					s.Host.Port = port
+				}
+			}
+			s.Host.Domain = host
+		}
+	} else {
+		s.Host.Domain = u.Host
 	}
-	s.Host.Domain = host
-	ip, port, err := ParseHostAddrOnline(u.Host)
-	if err != nil {
-		return nil, err
+	if s.Host.Domain != "" {
+		domain, err := ParseDomain(s.Host.Domain)
+		if err != nil {
+			return nil, err
+		}
+		s.Domain = *domain
 	}
-	s.Host.IP = ip.String()
-	s.Host.Port = port
 
-	s.Path = u.Path
+	s.Path.Str = u.Path
+	dirs := strings.Split(u.Path, "/")
+	for _, v := range dirs {
+		if v == "" {
+			continue
+		}
+		s.Path.Dirs = append(s.Path.Dirs, v)
+	}
+	s.Path.Params = u.Query()
 
-	/*referer_url := "http://www.google.com/search?q=gateway+oracle+cards+denise+linn&hl=en&client=safari"
-	r := refererparser.Parse(referer_url)
-
-	log.Printf("Known:%v", r.Known)
-	log.Printf("Referer:%v", r.Referer)
-	log.Printf("Medium:%v", r.Medium)
-	log.Printf("Search parameter:%v", r.SearchParameter)
-	log.Printf("Search term:%v", r.SearchTerm)
-	log.Printf("Host:%v", r.URI)*/
 	return &s, nil
 }
 
-func IsImageUrlOnline(url string) bool {
-	_, err := ParseUrlOnline(url, "")
+func IsImageUrl(url string) bool {
+	_, err := ParseUrl(url)
 	if err != nil {
 		return false
 	}
@@ -213,7 +225,7 @@ func IsImageUrlOnline(url string) bool {
 }
 
 func IsVideoUrl(url string) bool {
-	_, err := ParseUrlOnline(url, "")
+	_, err := ParseUrl(url)
 	if err != nil {
 		return false
 	}
@@ -227,7 +239,7 @@ func IsVideoUrl(url string) bool {
 }
 
 func IsAudioUrl(url string) bool {
-	_, err := ParseUrlOnline(url, "")
+	_, err := ParseUrl(url)
 	if err != nil {
 		return false
 	}

@@ -17,7 +17,7 @@ import (
 // FIXME 不要新建Transport，而是基于原来的修改
 // This proxy config method is different from xhttp/client.go Get()
 func SetProxy(client *http.Client, proxyUrlString string) error {
-	us, err := xaddr.ParseUrlOnline(proxyUrlString, "")
+	us, err := xaddr.ParseUrl(proxyUrlString)
 	if err != nil {
 		return err
 	}

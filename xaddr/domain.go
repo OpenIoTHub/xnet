@@ -6,15 +6,17 @@ package xaddr
 //判断两个域名是不是同一个所有人，比如news.baidu和www.baidu.com就是同一个所有者
 
 import (
+	"github.com/domainr/whois"
+	"github.com/globalsign/publicsuffix"
 	"github.com/joeguo/tldextract"
+	"github.com/liamcurry/domains"
 	"github.com/pkg/errors"
-	"github.com/weppos/publicsuffix-go/publicsuffix"
-	"os"
-	"time"
+	"github.com/smcduck/xdsa/xstring"
 	"github.com/smcduck/xsys/xenvvar"
 	"github.com/smcduck/xsys/xfs"
-	"github.com/liamcurry/domains"
-	"github.com/domainr/whois"
+	"os"
+	"strings"
+	"time"
 )
 
 type Domain struct {
@@ -81,22 +83,31 @@ func ParseONLINE(domain string) (*Domain, error) {
 }
 
 // NOTICE
-// 优点: 响应快，可离线工作
-// 缺点: TLD列表固化在代码中，请定期更新库以使判断结果尽可能准确
-func ParseOFFLINE(domain string) (*Domain, error) {
-	var result Domain
+// This an offline domain parse function, please update source repo often
+func ParseDomain(domain string) (*Domain, error) {
+	result := Domain{}
 
-	var fo publicsuffix.FindOptions
-	fo.DefaultRule = nil
-	fo.IgnorePrivate = false
-	dm, err := publicsuffix.ParseFromListWithOptions(publicsuffix.DefaultList, domain, &fo)
-	if err != nil {
-		return nil, err
+	ret := false
+	result.TLD, ret = publicsuffix.PublicSuffix(domain)
+	if !ret || result.TLD == "" {
+		return nil, errors.Errorf("%s is not a valid domain", domain)
 	}
-	result.SLD_ROOT = dm.SLD
-	result.TLD = dm.TLD
-	result.TRD_SUB = dm.TRD
-	result.SiteDomain = dm.SLD + "." + dm.TLD
+	s := xstring.RemoveTail(domain, len(result.TLD))
+	if len(s) > 0 && s[len(s) - 1] == '.' {
+		s = xstring.RemoveTail(s, 1)
+	}
+	if len(s) == 0 {
+		return &result, nil
+	}
+	ss := strings.Split(s, ".")
+	if len(ss) > 0 {
+		result.SLD_ROOT = ss[len(ss) - 1]
+		result.SiteDomain = result.SLD_ROOT + "." + result.TLD
+		ss = ss[:len(ss) - 1]
+		if len(ss) > 0 {
+			result.TRD_SUB = strings.Join(ss, ".")
+		}
+	}
 	return &result, nil
 }
 
@@ -109,8 +120,8 @@ func IsDomainONLINE(domain string) bool {
 	}
 }
 
-func IsDomainOFFLINE(domain string) bool {
-	_, err := ParseOFFLINE(domain)
+func IsDomain(domain string) bool {
+	_, err := ParseDomain(domain)
 	if err == nil {
 		return true
 	} else {
